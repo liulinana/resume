@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人求职简历 | 高端轻奢版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Inter', sans-serif;
+        }
+
+        :root {
+            --bg-dark: #0a0f1f;
+            --neon-blue: #00f3ff;
+            --neon-purple: #bc00ff;
+            --neon-cyan: #00ffd5;
+            --text-light: #e0e0e0;
+            --text-gray: #a0a0a0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow-blue: 0 0 15px rgba(0, 243, 255, 0.2);
+            --shadow-purple: 0 0 15px rgba(188, 0, 255, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            background-image: 
+                linear-gradient(135deg, rgba(10,15,31,0.95) 0%, rgba(20,25,45,0.95) 100%),
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 2px);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px;
+        }
+
+        /* 鼠标跟随光点 */
+        .mouse-follow {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0,243,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transition: 0.1s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 999;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--neon-blue);
+        }
+
+        .nav-menu a.active {
+            color: var(--neon-blue);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 2px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 22px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 0;
+            padding: 0 20px;
+        }
+
+        /* 玻璃卡片通用样式 */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-blue);
+            transition: 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .glass-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.25), 0 0 25px rgba(188, 0, 255, 0.2);
+            border-color: rgba(0, 243, 255, 0.2);
+        }
+
+        /* 标题样式 */
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 2px;
+        }
+
+        .highlight {
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+
+        /* 个人信息模块 */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .profile-info h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .profile-job {
+            font-size: 18px;
+            color: var(--neon-blue);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .profile-slogan {
+            font-size: 16px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+        }
+
+        .contact-item i {
+            color: var(--neon-purple);
+        }
+
+        /* 网格布局 */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        /* 列表样式 */
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .info-list li strong {
+            color: var(--neon-blue);
+        }
+
+        /* 经历模块 */
+        .experience-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .experience-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .exp-title {
+            font-weight: 600;
+            font-size: 17px;
+            color: var(--neon-cyan);
+        }
+
+        .exp-time {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .exp-desc {
+            padding-left: 20px;
+        }
+
+        .exp-desc li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        /* 作品集卡片 */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .portfolio-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.4s ease;
+            cursor: pointer;
+        }
+
+        .portfolio-img {
+            height: 180px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+
+        .portfolio-content {
+            padding: 20px;
+        }
+
+        .portfolio-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-desc {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+        }
+
+        /* 技能标签 */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .skill-tag {
+            padding: 10px 18px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(90deg, rgba(0,243,255,0.1), rgba(188,0,255,0.1));
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            transform: scale(1.05);
+        }
+
+        /* 响应式 */
+        @media (max-width: 992px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .hamburger {
+                display: block;
+            }
+            .profile-info h1 {
+                font-size: 30px;
+            }
+            .section-title {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .glass-card {
+                padding: 20px;
+            }
+            .avatar {
+                width: 130px;
+                height: 130px;
+            }
+            .contact-info {
+                gap: 15px;
+            }
+        }
+
+        /* 加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 鼠标跟随光点 -->
+    <div class="mouse-follow" id="mouseLight"></div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">求职简历</div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#profile" class="active">个人信息</a>
+                <a href="#education">教育背景</a>
+                <a href="#practice">校园实践</a>
+                <a href="#intern">实习经历</a>
+                <a href="#portfolio">作品集</a>
+                <a href="#skills">技能证书</a>
+                <a href="#about">自我评价</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 个人信息模块 -->
+        <section class="glass-card" id="profile">
+            <div class="profile-section">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <h1>李 <span class="highlight">四</span></h1>
+                    <div class="profile-job">求职意向：市场运营 / 活动策划 / 行政专员</div>
+                    <div class="profile-slogan">
+                        积极进取、责任心强，具备优秀的沟通协调能力与活动执行能力，
+                        善于团队协作，致力于以专业能力创造价值，追求卓越与成长
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>lisi@mail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>136 **** 0000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 教育背景 -->
+        <section class="glass-card" id="education">
+            <h2 class="section-title">教育 <span class="highlight">背景</span></h2>
+            <ul class="info-list">
+                <li><strong>院校名称：</strong> 清华大学</li>
+                <li><strong>所学专业：</strong> 市场营销专业</li>
+                <li><strong>学业成绩：</strong> GPA 3.7 / 4.0（专业前10%）</li>
+                <li><strong>核心课程：</strong> 市场营销学、消费者行为学、商务沟通、活动策划与管理、公共关系、数据分析基础</li>
+                <li><strong>荣誉奖项：</strong> 校级一等奖学金、优秀学生干部、三好学生、校园实践先进个人</li>
+            </ul>
+        </section>
+
+        <!-- 校园实践 -->
+        <section class="glass-card" id="practice">
+            <h2 class="section-title">校园 <span class="highlight">实践</span></h2>
+            
+            <div class="experience-item">
+                <div class="exp-header">
+                    <div class="exp-title">校学生会 活动部部长</div>
+                    <div class="exp-time">2023.09 - 2024.06</div>
+                </div>
+                <ul class="exp-desc">
+                    <li>统筹策划校园文化节、迎新晚会等6场大型活动，参与人数超2000人，活动满意度达95%以上</li>
+                    <li>负责团队分工、流程制定、物资筹备与现场执行，提升活动组织效率与整体质量</li>
+                    <li>对接校内各部门与校外合作单位，锻炼高效沟通、问题解决与多任务统筹能力</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="exp-header">
+                    <div class="exp-title">班级 学习委员</div>
+                    <div class="exp-time">2022.09 - 2023.06</div>
+                </div>
+                <ul class="exp-desc">
+                    <li>组织学习分享会、考前辅导等10余场班级活动，提升班级整体学习氛围</li>
+                    <li>负责信息传达、作业收集与同学沟通，培养细致负责的工作态度与服务意识</li>
+                    <li>协助老师完成日常教学管理工作，获得师生一致认可</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 实习经历 -->
+        <section class="glass-card" id="intern">
+            <h2 class="section-title">实习 <span class="highlight">经历</span></h2>
+            
+            <div class="experience-item">
+                <div class="exp-header">
+                    <div class="exp-title">新锐文化传媒有限公司 市场助理</div>
+                    <div class="exp-time">2024.07 - 2024.09</div>
+                </div>
+                <ul class="exp-desc">
+                    <li>协助完成品牌宣传文案撰写、活动方案整理与客户资料归档，提升文字与办公能力</li>
+                    <li>参与线下推广活动的现场执行，负责引导接待、流程跟进与数据记录</li>
+                    <li>整理市场调研信息，形成分析简报，为团队决策提供有效参考</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 作品集 -->
+        <section class="glass-card" id="portfolio">
+            <h2 class="section-title">作品 <span class="highlight">展示</span></h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-card glass-card">
+                    <div class="portfolio-img">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-title">校园活动策划方案</div>
+                        <div class="portfolio-desc">独立完成完整活动策划全案，包含流程设计、宣传方案、预算规划与风险控制</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card glass-card">
+                    <div class="portfolio-img">
+                        <i class="fas fa-file-powerpoint"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-title">品牌宣传PPT设计</div>
+                        <div class="portfolio-desc">制作高端商务风格演示文稿，视觉设计简洁大气，逻辑清晰，适用于汇报与推广</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card glass-card">
+                    <div class="portfolio-img">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-title">宣传文案作品集</div>
+                        <div class="portfolio-desc">包含活动推文、品牌介绍、推广文案等，语言精炼，表达清晰，风格正式专业</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card glass-card">
+                    <div class="portfolio-img">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-title">短视频创意策划</div>
+                        <div class="portfolio-desc">完成短视频脚本创作、内容规划与剪辑思路设计，贴合年轻群体传播需求</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技能证书 -->
+        <section class="glass-card" id="skills">
+            <h2 class="section-title">技能 <span class="highlight">证书</span></h2>
+            <div class="skills-container">
+                <div class="skill-tag">办公软件高级应用</div>
+                <div class="skill-tag">PPT演示设计</div>
+                <div class="skill-tag">文案撰写与编辑</div>
+                <div class="skill-tag">活动策划与执行</div>
+                <div class="skill-tag">大学英语六级</div>
+                <div class="skill-tag">沟通表达能力</div>
+                <div class="skill-tag">团队协作管理</div>
+                <div class="skill-tag">数据整理与分析</div>
+            </div>
+        </section>
+
+        <!-- 自我评价 -->
+        <section class="glass-card" id="about">
+            <h2 class="section-title">自我 <span class="highlight">评价</span></h2>
+            <p style="line-height: 1.8; color: var(--text-light); margin-bottom: 20px;">
+                本人性格开朗稳重、责任心强、做事认真细致，具备优秀的学习能力与适应能力。在校期间通过校园实践与实习工作，积累了活动组织、沟通协调、文案撰写与办公处理等实用能力。对待工作积极主动，善于团队合作，能够快速融入工作环境并高效完成任务。对求职岗位充满热情，愿意持续学习与提升自我，以踏实努力的态度为企业创造价值。
+            </p>
+            <h3 style="font-size: 18px; margin-bottom: 15px; color: var(--neon-cyan);">兴趣爱好</h3>
+            <div class="skills-container">
+                <div class="skill-tag">阅读写作</div>
+                <div class="skill-tag">创意策划</div>
+                <div class="skill-tag">摄影记录</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 鼠标跟随光效
+        const mouseLight = document.getElementById('mouseLight');
+        document.addEventListener('mousemove', (e) => {
+            mouseLight.style.left = e.clientX + 'px';
+            mouseLight.style.top = e.clientY + 'px';
+        });
+
+        // 卡片渐入动画
+        const cards = document.querySelectorAll('.glass-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+
+        // 导航高亮
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        const sections = document.querySelectorAll('section');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 平滑滚动
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 汉堡菜单
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            if(navMenu.style.display === 'flex') {
+                navMenu.style.display = 'none';
+            } else {
+                navMenu.style.display = 'flex';
+                navMenu.style.flexDirection = 'column';
+                navMenu.style.position = 'absolute';
+                navMenu.style.top = '70px';
+                navMenu.style.left = '0';
+                navMenu.style.width = '100%';
+                navMenu.style.background = 'rgba(10,15,31,0.98)';
+                navMenu.style.padding = '20px';
+                navMenu.style.backdropFilter = 'blur(10px)';
+            }
+        });
+    </script>
+</body>
+</html>
